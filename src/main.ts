@@ -7,13 +7,17 @@ app.listen(4443, () => {
     console.log('hello');
 });
 
-app.get('/', async (req: Request, res: Response) => {
-    const client = smartsheet.createClient({
-      accessToken: 'Wr4JhaEreWRNlClb7oeI0yqRDx2NuNMAEf191',
-      logLevel: 'info'
-    });
+// smartsheet webhook
+app.post('/', async (req: Request, res: Response) => {
+
+    // if smartsheet-hook-challenge header sent, respond and exit
+    if (req.headers['smartsheet-hook-challenge']) {
+        res.setHeader('smartsheet-hook-response', req.headers['smartsheet-hook-challenge']);
+        res.send();
+        return;
+    }
+
+    res.send(400);
     
-    const sheets = await client.sheets.listSheets();
-    console.log(sheets);
 });
 

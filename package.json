@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "dev": "nodemon src/main.ts",
+    "start": "node dist/main.js",
     "build": "tsc --project ."
   },
   "author": "",
